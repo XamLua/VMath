@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="vichmat:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/vichmat_jar</output-path>
+    <root id="archive" name="vichmat.jar">
+      <element id="module-output" name="vichmat" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../MathParser.org-mXparser-4.0.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
