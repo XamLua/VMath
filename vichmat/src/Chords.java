@@ -53,12 +53,7 @@ class Chords {
 
             e.setArgumentValue("x", chordCrossX);
             chordCrossY = e.calculate();
-
-
-            System.out.println(d.format(leftBorderX) + " " + d.format(rightBorderX) + " " + d.format(chordCrossX)
-                    + " " + d.format(leftBorderY) + " " + d.format(rightBorderY) + " " + d.format(chordCrossY) +
-                    " " + d.format(abs(chordCrossX - previousChordCrossX)));
-
+            
             if (chordCrossY * leftBorderY < 0)
                 rightBorderX = chordCrossX;
             else

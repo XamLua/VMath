@@ -13,13 +13,14 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
-import java.io.File;
+import java.io.*;
 import java.net.URL;
 
 public class PageCore extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        Button loadButton = new Button("Загрузить функцию из файла");
         Button findButton1 = new Button("Найти корень методом хорд:");
         Button findButton2 = new Button("Найти корень методом секущих");
 
@@ -46,7 +47,7 @@ public class PageCore extends Application {
         approxTextField.setMinWidth(20);
         equationTextField.setText("1.62*x^3 - 8.15*x^2 + 4.39*x + 4.29");
         approxTextField.setText("0.001");
-        equationRoot.getChildren().addAll(equationLabel, equationTextField, approxLabel, approxTextField);
+        equationRoot.getChildren().addAll(equationLabel, equationTextField, approxLabel, approxTextField, loadButton);
 
         HBox leftCheckRoot = new HBox();
         leftCheckRoot.setSpacing(15);
@@ -102,9 +103,15 @@ public class PageCore extends Application {
                 String lb = "'" + leftBorder.getText() + "'";
                 String rb = "'" + rightBorder.getText() + "'";
                 webEngine.executeScript("findRoot(" + lb + "," + rb + ");");
-                result1.setText("   " + Chords.search(
-                        Double.parseDouble(leftBorder.getText()), Double.parseDouble(rightBorder.getText()), equationTextField.getText()
-                ));
+                String answer = Chords.search(Double.parseDouble(leftBorder.getText()), Double.parseDouble(rightBorder.getText()), equationTextField.getText());
+                result1.setText("   " + answer);
+                try {
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(new File("./src/outputData")));
+                    bw.write("Корень, найденный методом хорд: " + answer);
+                    bw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -115,11 +122,37 @@ public class PageCore extends Application {
                 String lb = "'" + leftBorder.getText() + "'";
                 String rb = "'" + rightBorder.getText() + "'";
                 webEngine.executeScript("findRoot(" + lb + "," + rb + ");");
-                result2.setText("   " + Secant.search(
-                        Double.parseDouble(leftBorder.getText()), Double.parseDouble(rightBorder.getText()), equationTextField.getText()
-                ));
+                String answer = Secant.search(Double.parseDouble(leftBorder.getText()), Double.parseDouble(rightBorder.getText()), equationTextField.getText());
+                result2.setText("   " + answer);
+                try {
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(new File("./src/outputData")));
+                    bw.write("Корень, найденный методом секущих: " + answer);
+                    bw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
+
+        loadButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String equation = readData(new File("./src/inputData"));
+                String s = "'" + equation + "'";
+                equationTextField.setText(equation);
+                webEngine.executeScript("updateEquation(" + s + ");");
+            }
+        });
+    }
+
+    public static String readData(File file) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            return br.readLine();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static void go() {

@@ -22,7 +22,7 @@ public class Secant {
 
         DecimalFormatSymbols dfs = new DecimalFormatSymbols(Locale.getDefault());
         dfs.setDecimalSeparator('.');
-        DecimalFormat d = new DecimalFormat("#.###", dfs);
+        DecimalFormat d = new DecimalFormat("#.######", dfs);
 
 
         Function f = new Function("F(x) = " + function);
@@ -39,7 +39,6 @@ public class Secant {
         double rightBorderY = e.calculate();
         double rightBorderDer_2 = e_2.calculate();
 
-        System.out.println(leftBorderDer_2 + " " + rightBorderDer_2);
         double previousX = 0;
         double currentX = 0;
         double nextX = 0;
