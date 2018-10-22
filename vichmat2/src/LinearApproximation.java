@@ -27,27 +27,28 @@ public class LinearApproximation {
 
         int n = xs.size();
 
-        double SX = 0;
+        if (n == 1){
+            a = xs.get(0) != 0 ? ys.get(0)/xs.get(0) : 1;
+            b = xs.get(0) != 0 ? 0 : ys.get(0) - xs.get(0);
+        }
 
-        for (double el: xs)
-            SX += el;
+        else {
+            double SX = 0;
+            double SXX = 0;
+            double SY = 0;
+            double SXY = 0;
 
-        double SXX = 0;
+            for (int i = 0; i < n; i++) {
+                SX += xs.get(i);
+                SXX += xs.get(i) * xs.get(i);
+                SY += ys.get(i);
+                SXY += xs.get(i) * ys.get(i);
+            }
 
-        for (double el : xs)
-            SXX += el*el;
+            a = (SXY * n - SX * SY) / (SXX * n - SX * SX);
 
-        double SY = 0;
-        for (double el : ys)
-            SY += el;
-
-        double SXY = 0;
-        for (int i = 0; i < n; i++)
-            SXY += xs.get(i) * ys.get(i);
-
-        a = (SXY * n - SX * SY) / (SXX * n - SX * SX);
-
-        b = (SXX * SY - SX * SXY) / (SXX * n - SX * SX);
+            b = (SXX * SY - SX * SXY) / (SXX * n - SX * SX);
+        }
 
         S = 0;
         for (int i = 0; i < n; i++)

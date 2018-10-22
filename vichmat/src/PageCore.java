@@ -29,7 +29,6 @@ public class PageCore extends Application {
 
         File file = new File("./src/content.html");
         URL url = file.toURI().toURL();
-        System.out.println(url.toString());
 
         VBox root = new VBox();
         root.setPadding(new Insets(5));
@@ -46,7 +45,7 @@ public class PageCore extends Application {
         equationTextField.setMinWidth(250);
         approxTextField.setMinWidth(20);
         equationTextField.setText("1.62*x^3 - 8.15*x^2 + 4.39*x + 4.29");
-        approxTextField.setText("0.001");
+        approxTextField.setText("0.000001");
         equationRoot.getChildren().addAll(equationLabel, equationTextField, approxLabel, approxTextField, loadButton);
 
         HBox leftCheckRoot = new HBox();
@@ -99,7 +98,7 @@ public class PageCore extends Application {
         findButton1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Secant.setEps(Double.parseDouble(approxTextField.getText()));
+                Chords.setEps(Double.parseDouble(approxTextField.getText()));
                 String lb = "'" + leftBorder.getText() + "'";
                 String rb = "'" + rightBorder.getText() + "'";
                 webEngine.executeScript("findRoot(" + lb + "," + rb + ");");

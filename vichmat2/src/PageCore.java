@@ -56,6 +56,7 @@ public class PageCore extends Application {
         exec.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                readData(new File("./src/inputData"));
 
                 for (int i = 0; i < xs.size(); i++){
                     String id = "'point" + i + "'";
@@ -75,8 +76,6 @@ public class PageCore extends Application {
     }
 
     public static void go() {
-
-        readData(new File("./src/inputData"));
         launch();
 
     }
@@ -137,7 +136,7 @@ public class PageCore extends Application {
 
             for (int i = 0; i < xs.size(); i++){
                 bw.write(String.format(format, '|',
-                        center(String.format("%.3s", String.valueOf(xs.get(i))) + '|' + String.format("%.7s", String.valueOf(ys.get(i))), 20), '|',
+                        center(String.format("%.5s", String.valueOf(xs.get(i))) + '|' + String.format("%.7s", String.valueOf(ys.get(i))), 20), '|',
                         center(String.format("%.6s", String.valueOf(la.calculate(xs.get(i)))), 20), '|',
                         center(String.format("%.6s", String.valueOf(qa.calculate(xs.get(i)))), 20), '|',
                         center(String.format("%.6s", String.valueOf(ea.calculate(xs.get(i)))), 20), '|',
@@ -165,7 +164,7 @@ public class PageCore extends Application {
             bw.write(String.format(format, '|',
                     center("Sigma", 20), '|',
                     center(String.format("%.6s", String.valueOf(la.getSigma())), 20), '|',
-                    center(String.format("%.25s", String.valueOf(qa.getSigma())), 20), '|',
+                    center(String.format("%.6s", String.valueOf(qa.getSigma())), 20), '|',
                     center(String.format("%.6s", String.valueOf(ea.getSigma())), 20), '|',
                     center(String.format("%.6s", String.valueOf(loga.getSigma())), 20), '|',
                     center(String.format("%.6s", String.valueOf(pa.getSigma())), 20), '|'

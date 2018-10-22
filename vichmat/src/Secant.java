@@ -12,6 +12,8 @@ public class Secant {
 
     private static double eps = 0.001;
 
+    private static int iter = 0;
+
     public static void setEps(double eps){
 
         Secant.eps = eps;
@@ -22,7 +24,7 @@ public class Secant {
 
         DecimalFormatSymbols dfs = new DecimalFormatSymbols(Locale.getDefault());
         dfs.setDecimalSeparator('.');
-        DecimalFormat d = new DecimalFormat("#.######", dfs);
+        DecimalFormat d = new DecimalFormat("#.#######", dfs);
 
 
         Function f = new Function("F(x) = " + function);
@@ -59,6 +61,8 @@ public class Secant {
 
         currentX = (leftBorderX + rightBorderX) / 2;
 
+        iter = 0;
+
         do {
             x.setArgumentValue(previousX);
             previousY = e.calculate();
@@ -78,11 +82,13 @@ public class Secant {
             previousX = currentX;
             currentX = nextX;
 
+            iter++;
+
         }
 
         while (abs(currentX - previousX) > eps && Math.abs(nextY) > eps);
 
-        return "x = " + d.format(currentX);
+        return "x = " + d.format(currentX) + " i = " + iter;
     }
 
 }

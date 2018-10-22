@@ -28,16 +28,21 @@ public class ExponentialApproximation {
 
         int n = xs.size();
 
-        LinearApproximation la = new LinearApproximation();
-        ArrayList<Double> newys = new ArrayList<>();
-        for(int i = 0; i < ys.size(); i++)
-            newys.add(Math.log(ys.get(i)));
+        if(n == 1){
+            a = ys.get(0);
+            b = 0;
+        }
+        else {
+            LinearApproximation la = new LinearApproximation();
+            ArrayList<Double> newys = new ArrayList<>();
+            for (int i = 0; i < ys.size(); i++)
+                newys.add(Math.log(ys.get(i)));
 
-        la.execute(xs, newys);
+            la.execute(xs, newys);
 
-        b = la.getA();
-        a = Math.pow(Math.E, la.getB());
-
+            b = la.getA();
+            a = Math.pow(Math.E, la.getB());
+        }
         S = 0;
         for (int i = 0; i < n; i++)
             S += Math.pow(calculate(xs.get(i)) - ys.get(i), 2);

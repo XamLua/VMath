@@ -27,16 +27,22 @@ public class LogarithmicApproximation {
 
         int n = xs.size();
 
-        LinearApproximation la = new LinearApproximation();
+        if (n == 1){
+            a = ys.get(0);
+            b = 0;
+        }
+        else {
+            LinearApproximation la = new LinearApproximation();
 
-        ArrayList<Double> newxs = new ArrayList<>();
-        for (int i = 0; i < xs.size(); i++)
-            newxs.add(Math.log(xs.get(i)));
+            ArrayList<Double> newxs = new ArrayList<>();
+            for (int i = 0; i < xs.size(); i++)
+                newxs.add(Math.log(xs.get(i)));
 
-        la.execute(newxs, ys);
+            la.execute(newxs, ys);
 
-        a = la.getA();
-        b = la.getB();
+            a = la.getB();
+            b = la.getA();
+        }
 
         S = 0;
         for (int i = 0; i < n; i++)
@@ -46,11 +52,11 @@ public class LogarithmicApproximation {
     }
 
     public double calculate(double x) {
-        return b + a * Math.log(x);
+        return a + b * Math.log(x);
     }
 
     public String toExpression(){
-        return String.valueOf(b) + "+" + String.valueOf(a) + "*log(x)";
+        return String.valueOf(a) + "+" + String.valueOf(b) + "*log(x)";
     }
 
 }
